@@ -1,18 +1,21 @@
-import math
-
-
 class Matrix:
-    def __init__(self, matrix):
-        self.size = math.sqrt(len(matrix))
-        self.matrix = matrix
+    def __init__(self, n, start_point, end_point):
+        self.matrix = [0 for i in range(n*n)]
+        self.start = start_point
+        self.end = end_point
+        self.current_row = start_point[0]
+        self.current_column = start_point[1]
+        self.size = n
         self.reference = []
         for i in range(int(self.size)):
             row = []
             for j in range(int(self.size)):
                 row.append(self.matrix[i])
             self.reference.append(row)
+        self.reference[self.start[0]][self.start[1]] = "*"
+        self.reference[self.end[0]][self.end[1]] = "+"
 
-    def index(self, row, column):
+    def get_element(self, row, column):
         return self.reference[row][column]
 
     def get_matrix(self):
@@ -22,19 +25,45 @@ class Matrix:
         self.reference[row][column] = value
         return self.reference[row][column]
 
-    def up(self, row, column):
-        if self.reference[row - 1][column] == 0:
-            self.reference[row - 1][column] = 1
-        return self.reference[row - 1][column]
+    def up(self):
+        if self.reference[self.current_row - 1][self.current_column] == 0:
+            self.reference[self.current_row - 1][self.current_column] = 1
+            self.current_row -= 1
+            return self.current_row, self.current_column
+        elif self.reference[self.current_row - 1][self.current_column] == "+":
+            return print("End")
+        elif self.reference[self.current_row - 1][self.current_column] == "*":
+            return print("Back to Start")
 
-    def down(self, row, column):
-        return self.reference[row + 1][column]
+    def down(self):
+        if self.reference[self.current_row + 1][self.current_column] == 0:
+            self.reference[self.current_row + 1][self.current_column] = 1
+            self.current_row += 1
+            return self.current_row, self.current_column
+        elif self.reference[self.current_row + 1][self.current_column] == "+":
+            return print("End")
+        elif self.reference[self.current_row + 1][self.current_column] == "*":
+            return print("Back to Start")
 
-    def right(self, row, column):
-        return self.reference[row][column + 1]
+    def right(self):
+        if self.reference[self.current_row][self.current_column + 1] == 0:
+            self.reference[self.current_row][self.current_column + 1] = 1
+            self.current_column += 1
+            return self.current_row, self.current_column
+        elif self.reference[self.current_row][self.current_column + 1] == "+":
+            return print("End")
+        elif self.reference[self.current_row][self.current_column + 1] == "*":
+            return print("Back to Start")
 
-    def left(self, row, column):
-        return self.reference[row][column - 1]
+    def left(self):
+        if self.reference[self.current_row][self.current_column - 1] == 0:
+            self.reference[self.current_row][self.current_column - 1] = 1
+            self.current_column -= 1
+            return self.current_row, self.current_column
+        elif self.reference[self.current_row][self.current_column - 1] == "+":
+            return print("End")
+        elif self.reference[self.current_row][self.current_column - 1] == "*":
+            return print("Back to Start")
 
     def print_matrix(self):
         for row in self.reference:
@@ -43,7 +72,9 @@ class Matrix:
             print('\n')
 
 
-mrx = Matrix([0 for i in range(25)])
+mrx = Matrix(5, [2, 2], [4, 4])
 mrx.print_matrix()
-mrx.up(2, 2)
+mrx.down()
+mrx.down()
+mrx.right()
 mrx.print_matrix()
