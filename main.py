@@ -9,12 +9,6 @@ orange = (255, 165, 0)
 gwidth, gheight, margin = 35, 35, 5
 clock = pygame.time.Clock()
 
-
-def backend_grid(n):
-    grid = [[0 for x in range(n)] for y in range(n)]
-    return grid
-
-
 all_rects = []
 for y in range(0, height, gheight + margin):
     row = []
