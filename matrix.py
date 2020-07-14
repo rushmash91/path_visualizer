@@ -26,44 +26,56 @@ class Matrix:
         return self.reference[row][column]
 
     def up(self):
-        if self.reference[self.current_row - 1][self.current_column] == 0:
-            self.reference[self.current_row - 1][self.current_column] = 1
-            self.current_row -= 1
-            return self.current_row, self.current_column
-        elif self.reference[self.current_row - 1][self.current_column] == "+":
-            return print("End")
-        elif self.reference[self.current_row - 1][self.current_column] == "*":
-            return print("Back to Start")
+        try:
+            if self.reference[self.current_row - 1][self.current_column] == 0:
+                self.reference[self.current_row - 1][self.current_column] = 1
+                self.current_row -= 1
+                return self.current_row, self.current_column
+            elif self.reference[self.current_row - 1][self.current_column] == "+":
+                return print("End")
+            elif self.reference[self.current_row - 1][self.current_column] == "*":
+                return print("Back to Start")
+        except IndexError:
+            print("Out of Matrix")
 
     def down(self):
-        if self.reference[self.current_row + 1][self.current_column] == 0:
-            self.reference[self.current_row + 1][self.current_column] = 1
-            self.current_row += 1
-            return self.current_row, self.current_column
-        elif self.reference[self.current_row + 1][self.current_column] == "+":
-            return print("End")
-        elif self.reference[self.current_row + 1][self.current_column] == "*":
-            return print("Back to Start")
+        try:
+            if self.reference[self.current_row + 1][self.current_column] == 0:
+                self.reference[self.current_row + 1][self.current_column] = 1
+                self.current_row += 1
+                return self.current_row, self.current_column
+            elif self.reference[self.current_row + 1][self.current_column] == "+":
+                return print("End")
+            elif self.reference[self.current_row + 1][self.current_column] == "*":
+                return print("Back to Start")
+        except IndexError:
+            print("Out of Matrix")
 
     def right(self):
-        if self.reference[self.current_row][self.current_column + 1] == 0:
-            self.reference[self.current_row][self.current_column + 1] = 1
-            self.current_column += 1
-            return self.current_row, self.current_column
-        elif self.reference[self.current_row][self.current_column + 1] == "+":
-            return print("End")
-        elif self.reference[self.current_row][self.current_column + 1] == "*":
-            return print("Back to Start")
+        try:
+            if self.reference[self.current_row][self.current_column + 1] == 0:
+                self.reference[self.current_row][self.current_column + 1] = 1
+                self.current_column += 1
+                return self.current_row, self.current_column
+            elif self.reference[self.current_row][self.current_column + 1] == "+":
+                return print("End")
+            elif self.reference[self.current_row][self.current_column + 1] == "*":
+                return print("Back to Start")
+        except IndexError:
+            print("Out of Matrix")
 
     def left(self):
-        if self.reference[self.current_row][self.current_column - 1] == 0:
-            self.reference[self.current_row][self.current_column - 1] = 1
-            self.current_column -= 1
-            return self.current_row, self.current_column
-        elif self.reference[self.current_row][self.current_column - 1] == "+":
-            return print("End")
-        elif self.reference[self.current_row][self.current_column - 1] == "*":
-            return print("Back to Start")
+        try:
+            if self.reference[self.current_row][self.current_column - 1] == 0:
+                self.reference[self.current_row][self.current_column - 1] = 1
+                self.current_column -= 1
+                return self.current_row, self.current_column
+            elif self.reference[self.current_row][self.current_column - 1] == "+":
+                return print("End")
+            elif self.reference[self.current_row][self.current_column - 1] == "*":
+                return print("Back to Start")
+        except IndexError:
+            print("Out of Matrix")
 
     def print_matrix(self):
         for row in self.reference:
