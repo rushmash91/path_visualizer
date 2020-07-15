@@ -1,91 +1,38 @@
-import queue
 from matrix import Matrix
+from queue import Queue
+
+start_point = [1, 1]
+end_point = [4, 4]
+maze = Matrix(5, start_point, end_point)
+
+maze.print_matrix()
+
+q = Queue()
+moves = ["R", "L", "U", "D"]
+add = ""
+q.put("")
 
 
-def print_maze(maze, path=""):
-    i = maze.start[0]
-    j = maze.start[1]
-    pos = set()
-    for move in path:
-        if move == "L":
-            j -= 1
-
-        elif move == "R":
-            j += 1
-
-        elif move == "U":
-            i -= 1
-
-        elif move == "D":
-            i += 1
-        pos.add((i, j))
-
-    for i, row in enumerate(maze.get_matrix()):
-        for j, col in enumerate(row):
-            if (i, j) in pos:
-                maze.set_value(i, j, "+")
-
-    maze.print_matrix()
-
-
-def validity(maze, moves):
-    i = maze.start[0]
-    j = maze.start[1]
-    for move in moves:
-        if move == "L":
-            j -= 1
-
-        elif move == "R":
-            j += 1
-
-        elif move == "U":
-            i -= 1
-
-        elif move == "D":
-            i += 1
-
-        if not (0 <= j < len(maze.get_matrix()[0]) and 0 <= i < len(maze.get_matrix())):
-            return False
-
-        elif maze.get_matrix()[i][j] == "#":
-            return False
-
-    return True
-
-
-def find_end(maze, moves):
-    i = maze.start[0]
-    j = maze.start[1]
-    for move in moves:
-        if move == "L":
-            j -= 1
-
-        elif move == "R":
-            j += 1
-
-        elif move == "U":
-            i -= 1
-
-        elif move == "D":
-            i += 1
-
-    if maze.get_matrix()[i][j] == "#":
-        print("Found: " + moves)
-        print_maze(maze, moves)
+def path_validity(maze, test_path):
+    maze.start = start_point
+    for step in test_path:
+        if step == "R":
+            val = maze.right()
+        elif step == "L":
+            val = maze.left()
+        elif step == "U":
+            val = maze.up()
+        elif step == "D":
+            val = maze.down()
+        else:
+            val = ""
+    if val == "Out of Matrix":
+        return False
+    else:
         return True
 
-    return False
 
+while maze.path_found:
+    pass
 
-q = queue.Queue()
-q.put("")
-path = ""
-maze = Matrix(3, [0, 0], [2, 2])
-
-while not find_end(maze, path):
-    add = q.get()
-    # print(add)
-    for j in ["L", "R", "U", "D"]:
-        put = add + j
-        if validity(maze, put):
-            q.put(put)
+print(path_validity(maze, "LURDDDDDDD"))

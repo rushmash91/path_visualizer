@@ -28,18 +28,22 @@ class Matrix:
 
     def up(self):
         try:
-            if self.reference[self.current_row - 1][self.current_column] == "0":
-                self.reference[self.current_row - 1][self.current_column] = "1"
-                self.current_row -= 1
-                return "Up"
-            elif self.reference[self.current_row - 1][self.current_column] == "1":
-                self.current_row -= 1
-                return "Up"
-            elif self.reference[self.current_row - 1][self.current_column] == "#":
-                self.path_found = True
-                return "End"
-            elif self.reference[self.current_row - 1][self.current_column] == "*":
-                return "Back to Start"
+            if self.current_row >= 0 and self.current_column >= 0:
+                if self.reference[self.current_row - 1][self.current_column] == "0":
+                    self.reference[self.current_row - 1][self.current_column] = "1"
+                    self.current_row -= 1
+                    return "Up"
+                elif self.reference[self.current_row - 1][self.current_column] == "1":
+                    self.current_row -= 1
+                    return "Up"
+                elif self.reference[self.current_row - 1][self.current_column] == "#":
+                    self.path_found = True
+                    return "End"
+                elif self.reference[self.current_row - 1][self.current_column] == "*":
+                    self.current_row -= 1
+                    return "Back to Start"
+            else:
+                return "Out of Matrix"
         except IndexError:
             return "Out of Matrix"
 
@@ -56,6 +60,7 @@ class Matrix:
                 self.path_found = True
                 return "End"
             elif self.reference[self.current_row + 1][self.current_column] == "*":
+                self.current_row += 1
                 return "Back to Start"
         except IndexError:
             return "Out of Matrix"
@@ -73,24 +78,29 @@ class Matrix:
                 self.path_found = True
                 return "End"
             elif self.reference[self.current_row][self.current_column + 1] == "*":
+                self.current_column += 1
                 return "Back to Start"
         except IndexError:
             return "Out of Matrix"
 
     def left(self):
         try:
-            if self.reference[self.current_row][self.current_column - 1] == "0":
-                self.reference[self.current_row][self.current_column - 1] = "1"
-                self.current_column -= 1
-                return "Left"
-            elif self.reference[self.current_row][self.current_column - 1] == "1":
-                self.current_column -= 1
-                return "Left"
-            elif self.reference[self.current_row][self.current_column - 1] == "#":
-                self.path_found = True
-                return "End"
-            elif self.reference[self.current_row][self.current_column - 1] == "*":
-                return "Back to Start"
+            if self.current_row >= 0 and self.current_column > 0:
+                if self.reference[self.current_row][self.current_column - 1] == "0":
+                    self.reference[self.current_row][self.current_column - 1] = "1"
+                    self.current_column -= 1
+                    return "Left"
+                elif self.reference[self.current_row][self.current_column - 1] == "1":
+                    self.current_column -= 1
+                    return "Left"
+                elif self.reference[self.current_row][self.current_column - 1] == "#":
+                    self.path_found = True
+                    return "End"
+                elif self.reference[self.current_row][self.current_column - 1] == "*":
+                    self.current_column -= 1
+                    return "Back to Start"
+            else:
+                return "Out of Matrix"
         except IndexError:
             return "Out of Matrix"
 
