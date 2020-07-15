@@ -2,8 +2,8 @@ from matrix import Matrix
 from queue import Queue
 
 start_point = [1, 1]
-end_point = [4, 4]
-maze = Matrix(5, start_point, end_point)
+end_point = [5, 5]
+maze = Matrix(7, start_point, end_point)
 
 maze.print_matrix()
 
@@ -14,7 +14,31 @@ q.put("")
 
 
 def path_validity(maze, test_path):
-    maze.start = start_point
+    maze.current_row = start_point[0]
+    maze.current_column = start_point[1]
+    val = ""
+    for step in test_path:
+        if val == "Out of Matrix":
+            break
+        if step == "R":
+            val = maze.right()
+        elif step == "L":
+            val = maze.left()
+        elif step == "U":
+            val = maze.up()
+        elif step == "D":
+            val = maze.down()
+    if val == "Out of Matrix":
+        return False
+    else:
+        return True
+
+
+def find_end(maze, test_path):
+    val = ""
+    maze.current_row = start_point[0]
+    maze.current_column = start_point[1]
+
     for step in test_path:
         if step == "R":
             val = maze.right()
@@ -26,13 +50,16 @@ def path_validity(maze, test_path):
             val = maze.down()
         else:
             val = ""
-    if val == "Out of Matrix":
-        return False
-    else:
+    if val == "End":
+        print(test_path)
         return True
+    else:
+        return False
 
 
-while maze.path_found:
-    pass
-
-print(path_validity(maze, "LURDDDDDDD"))
+while not find_end(maze, add):
+    add = q.get()
+    for i in moves:
+        put = add + i
+        if path_validity(maze, put):
+            q.put(put)

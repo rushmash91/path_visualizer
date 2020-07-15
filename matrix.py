@@ -28,7 +28,7 @@ class Matrix:
 
     def up(self):
         try:
-            if self.current_row >= 0 and self.current_column >= 0:
+            if self.current_row > 0 and self.current_column >= 0:
                 if self.reference[self.current_row - 1][self.current_column] == "0":
                     self.reference[self.current_row - 1][self.current_column] = "1"
                     self.current_row -= 1
@@ -104,6 +104,15 @@ class Matrix:
         except IndexError:
             return "Out of Matrix"
 
+    def reset(self):
+        self.current_row = self.start[0]
+        self.current_column = self.start[1]
+        for i in range(len(self.reference)):
+            for j in range(len(self.reference[i])):
+                if self.reference[i][j] == "1":
+                    self.reference[i][j] = "0"
+        return self.reference
+
     def print_matrix(self):
         for row in self.reference:
             for j in row:
@@ -111,7 +120,10 @@ class Matrix:
             print('\n')
 
 
-# testing
+# # testing
 # mrx = Matrix(5, [2, 2], [4, 4])
 # mrx.right()
 # mrx.down()
+# mrx.print_matrix()
+# mrx.reset()
+# mrx.print_matrix()
