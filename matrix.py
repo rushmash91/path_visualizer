@@ -104,7 +104,7 @@ class Matrix:
         except IndexError:
             return "Out of Matrix"
 
-    def reset(self):
+    def clear_paths(self):
         self.current_row = self.start[0]
         self.current_column = self.start[1]
         for i in range(len(self.reference)):
@@ -120,10 +120,10 @@ class Matrix:
             print('\n')
 
 
-# # testing
+# testing
 # mrx = Matrix(5, [2, 2], [4, 4])
 # mrx.right()
 # mrx.down()
 # mrx.print_matrix()
-# mrx.reset()
+# mrx.clear_paths()
 # mrx.print_matrix()

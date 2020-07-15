@@ -34,6 +34,20 @@ def path_validity(maze, test_path):
         return True
 
 
+def final_path(maze, path):
+    maze.clear_paths()
+    for step in path:
+        if step == "R":
+            maze.right()
+        elif step == "L":
+            maze.left()
+        elif step == "U":
+            maze.up()
+        elif step == "D":
+            maze.down()
+    maze.print_matrix()
+
+
 def find_end(maze, test_path):
     val = ""
     maze.current_row = start_point[0]
@@ -51,7 +65,7 @@ def find_end(maze, test_path):
         else:
             val = ""
     if val == "End":
-        print(test_path)
+        final_path(maze, test_path)
         return True
     else:
         return False
