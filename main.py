@@ -11,6 +11,7 @@ orange = (255, 165, 0)
 gwidth, gheight, margin = 155, 155, 5
 clock = pygame.time.Clock()
 
+bfs_points = []
 all_rects = []
 for y in range(0, height, gheight + margin):
     row = []
@@ -25,15 +26,26 @@ screen = pygame.display.set_mode((width, height))
 title = pygame.display.set_caption('Path Finder')
 logo = pygame.image.load('maze.png')
 pygame.display.set_icon(logo)
-bfs_points = []
 
-# temp
-start_point = [1, 3]
-end_point = [4, 4]
-maze = Matrix(5, start_point, end_point)
-maze.print_matrix()
-bfs(maze, start_point)
-maze.print_matrix()
+
+def execute_bfs(points):
+    start_rect = points[0]
+    end_rect = points[1]
+    for row in all_rects:
+        for item in row:
+            rect, _ = item
+            if rect == start_rect:
+                si = all_rects.index(row)
+                sj = row.index(item)
+            if rect == end_rect:
+                ei = all_rects.index(row)
+                ej = row.index(item)
+
+    start_point = [si, sj]
+    end_point = [ei, ej]
+    maze = Matrix(5, start_point, end_point)
+    bfs(maze, start_point)
+    return maze
 
 
 def text_objects(text, font):
@@ -55,13 +67,22 @@ def intro():
                     select_points()
 
         screen.fill(white)
+
+        # heading
         text = pygame.font.Font('freesansbold.ttf', 60)
         TextSurf, TextRect = text_objects("Pathfinding Visualizer", text)
-        TextRect.center = ((width / 2), (height / 2))
+        TextRect.center = (int(width / 2), int(height / 2) - 300)
+        screen.blit(TextSurf, TextRect)
+
+        # Description
+        text = pygame.font.Font('freesansbold.ttf', 30)
+        TextSurf, TextRect = text_objects("Press Start to Select Start and End Points", text)
+        TextRect.center = (int(width / 2), int(height / 2))
         screen.blit(TextSurf, TextRect)
 
         pygame.draw.rect(screen, orange, btn)
 
+        # start button
         text = pygame.font.Font('freesansbold.ttf', 30)
         TextSurf, TextRect = text_objects("Start", text)
         TextRect.center = (380, 600)
@@ -82,8 +103,6 @@ def select_points():
                 quit()
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if len(bfs_points) >= 1:
-                    make_walls()
                 for row_rect in all_rects:
                     for r in row_rect:
                         rect, color = r
@@ -91,8 +110,11 @@ def select_points():
                             if color == white:
                                 r[1] = black
                                 bfs_points.append(rect)
+                                print(bfs_points)
                             else:
                                 r[1] = white
+            elif len(bfs_points) >= 2:
+                show_path()
 
         screen.fill(black)
         # drawing a grid
@@ -105,7 +127,8 @@ def select_points():
         clock.tick(60)
 
 
-def make_walls():
+def show_path():
+    maze = execute_bfs(bfs_points)
     running = True
     while running:
         for event in pygame.event.get():
@@ -113,7 +136,6 @@ def make_walls():
                 running = False
                 pygame.quit()
                 quit()
-
             else:
                 for row_rect, row_maze in zip(all_rects, maze.get_matrix()):
                     for r, p in zip(row_rect, row_maze):
