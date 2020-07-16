@@ -1,19 +1,8 @@
 from matrix import Matrix
 from queue import Queue
 
-start_point = [1, 1]
-end_point = [5, 5]
-maze = Matrix(7, start_point, end_point)
 
-maze.print_matrix()
-
-q = Queue()
-moves = ["R", "L", "U", "D"]
-add = ""
-q.put("")
-
-
-def path_validity(maze, test_path):
+def path_validity(maze, test_path, start_point):
     maze.current_row = start_point[0]
     maze.current_column = start_point[1]
     val = ""
@@ -45,10 +34,9 @@ def final_path(maze, path):
             maze.up()
         elif step == "D":
             maze.down()
-    maze.print_matrix()
 
 
-def find_end(maze, test_path):
+def find_end(maze, test_path, start_point):
     val = ""
     maze.current_row = start_point[0]
     maze.current_column = start_point[1]
@@ -71,9 +59,28 @@ def find_end(maze, test_path):
         return False
 
 
-while not find_end(maze, add):
-    add = q.get()
-    for i in moves:
-        put = add + i
-        if path_validity(maze, put):
-            q.put(put)
+def bfs(maze, start_point):
+    # Breath First Algorithm
+    q = Queue()
+    moves = ["R", "L", "U", "D"]
+    add = ""
+    q.put("")
+    while not find_end(maze, add, start_point):
+        add = q.get()
+        for i in moves:
+            put = add + i
+            if path_validity(maze, put, start_point):
+                q.put(put)
+
+
+def main():
+    start_point = [1, 3]
+    end_point = [4, 4]
+    maze = Matrix(5, start_point, end_point)
+    maze.print_matrix()
+    bfs(maze, start_point)
+    maze.print_matrix()
+
+
+if __name__ == '__main__':
+    main()

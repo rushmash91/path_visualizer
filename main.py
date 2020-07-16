@@ -1,4 +1,6 @@
 import pygame
+from bfs import bfs
+from matrix import Matrix
 
 width, height = 800, 800
 white = (255, 255, 255)
@@ -6,7 +8,7 @@ black = (0, 0, 0)
 orange = (255, 165, 0)
 
 # grid
-gwidth, gheight, margin = 35, 35, 5
+gwidth, gheight, margin = 155, 155, 5
 clock = pygame.time.Clock()
 
 all_rects = []
@@ -23,6 +25,15 @@ screen = pygame.display.set_mode((width, height))
 title = pygame.display.set_caption('Path Finder')
 logo = pygame.image.load('maze.png')
 pygame.display.set_icon(logo)
+bfs_points = []
+
+# temp
+start_point = [1, 3]
+end_point = [4, 4]
+maze = Matrix(5, start_point, end_point)
+maze.print_matrix()
+bfs(maze, start_point)
+maze.print_matrix()
 
 
 def text_objects(text, font):
@@ -41,7 +52,7 @@ def intro():
                 quit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if btn.collidepoint(pygame.mouse.get_pos()):
-                    make_walls()
+                    select_points()
 
         screen.fill(white)
         text = pygame.font.Font('freesansbold.ttf', 60)
@@ -60,6 +71,40 @@ def intro():
         clock.tick(15)
 
 
+def select_points():
+    running = True
+
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+                quit()
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if len(bfs_points) >= 1:
+                    make_walls()
+                for row_rect in all_rects:
+                    for r in row_rect:
+                        rect, color = r
+                        if rect.collidepoint(pygame.mouse.get_pos()):
+                            if color == white:
+                                r[1] = black
+                                bfs_points.append(rect)
+                            else:
+                                r[1] = white
+
+        screen.fill(black)
+        # drawing a grid
+        for row in all_rects:
+            for item in row:
+                rect, color = item
+                pygame.draw.rect(screen, color, rect)
+
+        pygame.display.update()
+        clock.tick(60)
+
+
 def make_walls():
     running = True
     while running:
@@ -69,15 +114,14 @@ def make_walls():
                 pygame.quit()
                 quit()
 
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                for row in all_rects:
-                    for r in row:
-                        rect, color = r
-                        if rect.collidepoint(pygame.mouse.get_pos()):
-                            if color == white:
-                                r[1] = black
-                            else:
-                                r[1] = white
+            else:
+                for row_rect, row_maze in zip(all_rects, maze.get_matrix()):
+                    for r, p in zip(row_rect, row_maze):
+                        if p == "0":
+                            r[1] = white
+                        else:
+                            r[1] = black
+
         screen.fill(black)
         # drawing a grid
         for row in all_rects:

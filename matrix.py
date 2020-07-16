@@ -113,6 +113,13 @@ class Matrix:
                     self.reference[i][j] = "0"
         return self.reference
 
+    def convert_tolist(self):
+        listed = []
+        for row in self.reference:
+            for item in row:
+                listed.append(item)
+        return listed
+
     def print_matrix(self):
         for row in self.reference:
             for j in row:
@@ -120,10 +127,11 @@ class Matrix:
             print('\n')
 
 
-# testing
+# # testing
 # mrx = Matrix(5, [2, 2], [4, 4])
 # mrx.right()
 # mrx.down()
 # mrx.print_matrix()
 # mrx.clear_paths()
 # mrx.print_matrix()
+# print(mrx.convert_tolist())
