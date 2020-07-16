@@ -125,13 +125,3 @@ class Matrix:
             for j in row:
                 print(j, end=' ')
             print('\n')
-
-
-# # testing
-# mrx = Matrix(5, [2, 2], [4, 4])
-# mrx.right()
-# mrx.down()
-# mrx.print_matrix()
-# mrx.clear_paths()
-# mrx.print_matrix()
-# print(mrx.convert_tolist())

@@ -5,7 +5,11 @@ from matrix import Matrix
 width, height = 800, 800
 white = (255, 255, 255)
 black = (0, 0, 0)
+yellow = (255, 255, 0)
 orange = (255, 165, 0)
+dark_gray = (80, 80, 80)
+green = (0, 255, 0)
+brown = (156, 76, 0)
 
 # grid
 gwidth, gheight, margin = 155, 155, 5
@@ -17,7 +21,7 @@ for y in range(0, height, gheight + margin):
     row = []
     for x in range(0, width, gwidth + margin):
         rect = pygame.Rect(x, y, gwidth, gheight)
-        row.append([rect, white])
+        row.append([rect, dark_gray])
     all_rects.append(row)
 
 
@@ -66,11 +70,11 @@ def intro():
                 if btn.collidepoint(pygame.mouse.get_pos()):
                     select_points()
 
-        screen.fill(white)
+        screen.fill(yellow)
 
         # heading
         text = pygame.font.Font('freesansbold.ttf', 60)
-        TextSurf, TextRect = text_objects("Pathfinding Visualizer", text)
+        TextSurf, TextRect = text_objects("Path Visualizer", text)
         TextRect.center = (int(width / 2), int(height / 2) - 300)
         screen.blit(TextSurf, TextRect)
 
@@ -107,12 +111,11 @@ def select_points():
                     for r in row_rect:
                         rect, color = r
                         if rect.collidepoint(pygame.mouse.get_pos()):
-                            if color == white:
+                            if color == dark_gray:
                                 r[1] = black
                                 bfs_points.append(rect)
-                                print(bfs_points)
                             else:
-                                r[1] = white
+                                r[1] = dark_gray
             elif len(bfs_points) >= 2:
                 show_path()
 
@@ -140,9 +143,11 @@ def show_path():
                 for row_rect, row_maze in zip(all_rects, maze.get_matrix()):
                     for r, p in zip(row_rect, row_maze):
                         if p == "0":
-                            r[1] = white
+                            r[1] = dark_gray
+                        elif p == "1":
+                            r[1] = green
                         else:
-                            r[1] = black
+                            r[1] = brown
 
         screen.fill(black)
         # drawing a grid
