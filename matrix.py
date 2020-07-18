@@ -1,10 +1,11 @@
 class Matrix:
-    def __init__(self, n, start_point, end_point):
+    def __init__(self, n, start_point, end_point, walls):
         self.matrix = ["0" for i in range(n*n)]
         self.start = start_point
         self.end = end_point
         self.current_row = start_point[0]
         self.current_column = start_point[1]
+        self.walls = walls
         self.path_found = False
         self.size = n
         self.reference = []
@@ -15,6 +16,10 @@ class Matrix:
             self.reference.append(row)
         self.reference[self.start[0]][self.start[1]] = "*"
         self.reference[self.end[0]][self.end[1]] = "#"
+        for wall in self.walls:
+            row = wall[0]
+            column = wall[1]
+            self.reference[row][column] = "|"
 
     def get_element(self, row, column):
         return self.reference[row][column]
@@ -111,6 +116,10 @@ class Matrix:
             for j in range(len(self.reference[i])):
                 if self.reference[i][j] == "1":
                     self.reference[i][j] = "0"
+        for wall in self.walls:
+            row = wall[0]
+            column = wall[1]
+            self.reference[row][column] = "|"
         return self.reference
 
     def convert_tolist(self):
@@ -125,3 +134,4 @@ class Matrix:
             for j in row:
                 print(j, end=' ')
             print('\n')
+

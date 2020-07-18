@@ -16,6 +16,8 @@ gwidth, gheight, margin = 155, 155, 5
 clock = pygame.time.Clock()
 
 bfs_points = []
+walls = []
+
 all_rects = []
 for y in range(0, height, gheight + margin):
     row = []
@@ -117,7 +119,7 @@ def select_points():
                             else:
                                 r[1] = dark_gray
             elif len(bfs_points) >= 2:
-                show_path()
+                make_walls_display()
 
         screen.fill(black)
         # drawing a grid
@@ -125,6 +127,80 @@ def select_points():
             for item in row:
                 rect, color = item
                 pygame.draw.rect(screen, color, rect)
+
+        pygame.display.update()
+        clock.tick(60)
+
+
+def make_walls_display():
+
+    introduction = True
+    btn = pygame.Rect(330, 570, 100, 60)
+    while introduction:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if btn.collidepoint(pygame.mouse.get_pos()):
+                    make_walls()
+
+        screen.fill(yellow)
+
+        # heading
+        text = pygame.font.Font('freesansbold.ttf', 60)
+        TextSurf, TextRect = text_objects("Make Walls", text)
+        TextRect.center = (int(width / 2), int(height / 2) - 300)
+        screen.blit(TextSurf, TextRect)
+
+        # Description
+        text = pygame.font.Font('freesansbold.ttf', 30)
+        TextSurf, TextRect = text_objects("Press Start to Select the Wall Cells", text)
+        TextRect.center = (int(width / 2), int(height / 2))
+        screen.blit(TextSurf, TextRect)
+
+        pygame.draw.rect(screen, orange, btn)
+
+        # start button
+        text = pygame.font.Font('freesansbold.ttf', 30)
+        TextSurf, TextRect = text_objects("Start", text)
+        TextRect.center = (380, 600)
+        screen.blit(TextSurf, TextRect)
+
+        pygame.display.update()
+        clock.tick(15)
+
+
+def make_walls():
+    running = True
+
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+                quit()
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                for row_rect in all_rects:
+                    for r in row_rect:
+                        rect, color = r
+                        if rect.collidepoint(pygame.mouse.get_pos()):
+                            if color == dark_gray:
+                                r[1] = black
+                                walls.append(rect)
+                                print(walls)
+                            else:
+                                r[1] = dark_gray
+
+        screen.fill(black)
+        # drawing a grid
+        for row in all_rects:
+            for item in row:
+                rect, color = item
+                pygame.draw.rect(screen, color, rect)
+        for rect in bfs_points:
+            pygame.draw.rect(screen, brown, rect)
 
         pygame.display.update()
         clock.tick(60)
