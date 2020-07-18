@@ -134,4 +134,3 @@ class Matrix:
             for j in row:
                 print(j, end=' ')
             print('\n')
-
