@@ -34,9 +34,10 @@ logo = pygame.image.load('maze.png')
 pygame.display.set_icon(logo)
 
 
-def execute_bfs(points):
+def execute_bfs(points, walls):
     start_rect = points[0]
     end_rect = points[1]
+    wall_list = []
     for row in all_rects:
         for item in row:
             rect, _ = item
@@ -46,10 +47,16 @@ def execute_bfs(points):
             if rect == end_rect:
                 ei = all_rects.index(row)
                 ej = row.index(item)
+            for wall in walls:
+                if rect == wall:
+                    wi = all_rects.index(row)
+                    wj = row.index(item)
+                    wall_list.append([wi, wj])
+
 
     start_point = [si, sj]
     end_point = [ei, ej]
-    maze = Matrix(5, start_point, end_point)
+    maze = Matrix(5, start_point, end_point, wall_list)
     bfs(maze, start_point)
     return maze
 
@@ -189,9 +196,11 @@ def make_walls():
                             if color == dark_gray:
                                 r[1] = black
                                 walls.append(rect)
-                                print(walls)
                             else:
                                 r[1] = dark_gray
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    show_path()
 
         screen.fill(black)
         # drawing a grid
@@ -207,7 +216,7 @@ def make_walls():
 
 
 def show_path():
-    maze = execute_bfs(bfs_points)
+    maze = execute_bfs(bfs_points, walls)
     running = True
     while running:
         for event in pygame.event.get():
@@ -222,8 +231,10 @@ def show_path():
                             r[1] = dark_gray
                         elif p == "1":
                             r[1] = green
-                        else:
+                        elif p == "*" or p == "#":
                             r[1] = brown
+                        elif p == "|":
+                            r[1] = black
 
         screen.fill(black)
         # drawing a grid
