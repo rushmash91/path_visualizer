@@ -11,27 +11,18 @@ dark_gray = (80, 80, 80)
 green = (0, 255, 0)
 brown = (156, 76, 0)
 
-# grid
-gwidth, gheight, margin = 155, 155, 5
-clock = pygame.time.Clock()
-
-bfs_points = []
-walls = []
-
-all_rects = []
-for y in range(0, height, gheight + margin):
-    row = []
-    for x in range(0, width, gwidth + margin):
-        rect = pygame.Rect(x, y, gwidth, gheight)
-        row.append([rect, dark_gray])
-    all_rects.append(row)
-
 
 pygame.init()
 screen = pygame.display.set_mode((width, height))
 title = pygame.display.set_caption('Path Finder')
 logo = pygame.image.load('maze.png')
 pygame.display.set_icon(logo)
+clock = pygame.time.Clock()
+
+selected_grid = []
+bfs_points = []
+walls = []
+all_rects = []
 
 
 def execute_bfs(points, walls):
@@ -67,7 +58,6 @@ def text_objects(text, font):
 
 
 def intro():
-
     introduction = True
     btn = pygame.Rect(330, 570, 100, 60)
     while introduction:
@@ -77,7 +67,7 @@ def intro():
                 quit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if btn.collidepoint(pygame.mouse.get_pos()):
-                    select_points()
+                    select_grid()
 
         screen.fill(yellow)
 
@@ -105,7 +95,87 @@ def intro():
         clock.tick(15)
 
 
+def select_grid():
+    select_grid = True
+    grid_btn5 = pygame.Rect(210, 570, 100, 60)
+    grid_btn6 = pygame.Rect(450, 570, 100, 60)
+    grid_btn7 = pygame.Rect(210, 670, 100, 60)
+    grid_btn8 = pygame.Rect(450, 670, 100, 60)
+
+    while select_grid:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if grid_btn5.collidepoint(pygame.mouse.get_pos()):
+                    selected_grid.append(5)
+                    select_points()
+                if grid_btn6.collidepoint(pygame.mouse.get_pos()):
+                    selected_grid.append(6)
+                    select_points()
+                if grid_btn7.collidepoint(pygame.mouse.get_pos()):
+                    selected_grid.append(7)
+                    select_points()
+                if grid_btn8.collidepoint(pygame.mouse.get_pos()):
+                    selected_grid.append(8)
+                    select_points()
+
+        screen.fill(yellow)
+
+        # heading
+        text = pygame.font.Font('freesansbold.ttf', 60)
+        TextSurf, TextRect = text_objects("Path Visualizer", text)
+        TextRect.center = (int(width / 2), int(height / 2) - 300)
+        screen.blit(TextSurf, TextRect)
+
+        # Description
+        text = pygame.font.Font('freesansbold.ttf', 30)
+        TextSurf, TextRect = text_objects("Select Grid Size", text)
+        TextRect.center = (int(width / 2), int(height / 2))
+        screen.blit(TextSurf, TextRect)
+
+        pygame.draw.rect(screen, orange, grid_btn5)
+        pygame.draw.rect(screen, orange, grid_btn6)
+        pygame.draw.rect(screen, orange, grid_btn7)
+        pygame.draw.rect(screen, orange, grid_btn8)
+
+        # buttons
+        text = pygame.font.Font('freesansbold.ttf', 30)
+        TextSurf, TextRect = text_objects(" 5 * 5 ", text)
+        TextRect.center = (260, 600)
+        screen.blit(TextSurf, TextRect)
+
+        text = pygame.font.Font('freesansbold.ttf', 30)
+        TextSurf, TextRect = text_objects(" 6 * 6 ", text)
+        TextRect.center = (500, 600)
+        screen.blit(TextSurf, TextRect)
+
+        text = pygame.font.Font('freesansbold.ttf', 30)
+        TextSurf, TextRect = text_objects(" 7 * 7 ", text)
+        TextRect.center = (260, 700)
+        screen.blit(TextSurf, TextRect)
+
+        text = pygame.font.Font('freesansbold.ttf', 30)
+        TextSurf, TextRect = text_objects(" 8 * 8 ", text)
+        TextRect.center = (500, 700)
+        screen.blit(TextSurf, TextRect)
+
+        pygame.display.update()
+        clock.tick(15)
+
+
 def select_points():
+    # grid
+    gwidth, gheight, margin = (800 / selected_grid[0]) - 5, (800 / selected_grid[0]) - 5, 5
+
+    for y in range(0, height, int(gheight + margin)):
+        row = []
+        for x in range(0, width, int(gwidth + margin)):
+            rect = pygame.Rect(x, y, int(gwidth), int(gheight))
+            row.append([rect, dark_gray])
+        all_rects.append(row)
+
     running = True
 
     while running:

@@ -74,10 +74,10 @@ def bfs(maze, start_point):
 
 
 def main():
-    start_point = [1, 0]
-    end_point = [1, 2]
-    walls = [[1, 1], [2, 2]]
-    maze = Matrix(5, start_point, end_point, walls)
+    start_point = [0, 0]
+    end_point = [0, 9]
+    walls = [[0, 1], [1, 2]]
+    maze = Matrix(10, start_point, end_point, walls)
     maze.print_matrix()
     bfs(maze, start_point)
     maze.print_matrix()
