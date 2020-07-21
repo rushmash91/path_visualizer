@@ -65,21 +65,25 @@ def bfs(maze, start_point):
     moves = ["R", "L", "U", "D"]
     add = ""
     q.put("")
+    states = []
     while not find_end(maze, add, start_point):
+        states.append(maze.get_matrix())
         add = q.get()
         for i in moves:
             put = add + i
             if path_validity(maze, put, start_point):
                 q.put(put)
+    return states
 
 
 def main():
     start_point = [0, 0]
-    end_point = [0, 9]
+    end_point = [0, 4]
     walls = [[0, 1], [1, 2]]
-    maze = Matrix(10, start_point, end_point, walls)
+    maze = Matrix(5, start_point, end_point, walls)
     maze.print_matrix()
-    bfs(maze, start_point)
+    steps = bfs(maze, start_point)
+    print(steps)
     maze.print_matrix()
 
 

@@ -25,7 +25,7 @@ walls = []
 all_rects = []
 
 
-def execute_bfs(points, walls):
+def execute_bfs(points, walls, selected_grid):
     start_rect = points[0]
     end_rect = points[1]
     wall_list = []
@@ -47,7 +47,7 @@ def execute_bfs(points, walls):
 
     start_point = [si, sj]
     end_point = [ei, ej]
-    maze = Matrix(5, start_point, end_point, wall_list)
+    maze = Matrix(selected_grid[0], start_point, end_point, wall_list)
     bfs(maze, start_point)
     return maze
 
@@ -286,7 +286,7 @@ def make_walls():
 
 
 def show_path():
-    maze = execute_bfs(bfs_points, walls)
+    maze = execute_bfs(bfs_points, walls, selected_grid)
     running = True
     while running:
         for event in pygame.event.get():
