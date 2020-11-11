@@ -1,7 +1,7 @@
 # Path Visualizer
 
 ## Description
-Visualising Breadth First Search to find shortest Path on a Grid using Pygame.
+Using Breadth First Search to find shortest Path on a Grid using Pygame.
 
 ## Prerequisite
 ```sudo apt-get install python3-pygame```
@@ -17,7 +17,7 @@ Visualising Breadth First Search to find shortest Path on a Grid using Pygame.
 
 ![alt text](https://github.com/rushmash91/path_visualizer/blob/master/img/IMG_20201111_105943_294__01.jpg "")
 
-4. Select the size of the Grid. Processing takes longer in larger Grids.
+4. Select two points on the Grid(they'll turn black). The first one is the Start point and second is the End.
 
 ![alt text](https://github.com/rushmash91/path_visualizer/blob/master/img/IMG_20201111_105941_650__01.jpg "")
 
@@ -25,13 +25,14 @@ Visualising Breadth First Search to find shortest Path on a Grid using Pygame.
 
 ![alt text](https://github.com/rushmash91/path_visualizer/blob/master/img/IMG_20201111_105939_580__01__01.jpg "")
 
+
 6. Click Start
 
-![alt text](https://github.com/rushmash91/path_visualizer/blob/master/img/IMG_20201111_105934_202__01.jpg "")
+![alt text](https://github.com/rushmash91/path_visualizer/blob/master/img/IMG_20201111_105937_007__01.jpg "")
 
 7. Click Start
 
-![alt text](https://github.com/rushmash91/path_visualizer/blob/master/img/IMG_20201111_105937_007__01.jpg "")
+![alt text](https://github.com/rushmash91/path_visualizer/blob/master/img/IMG_20201111_105934_202__01.jpg "")
 
 8. Click Start
 
