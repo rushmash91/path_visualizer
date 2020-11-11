@@ -17,28 +17,28 @@ Using Breadth First Search to find shortest Path on a Grid using Pygame.
 
 ![alt text](https://github.com/rushmash91/path_visualizer/blob/master/img/IMG_20201111_105943_294__01.jpg "")
 
-4. Select two points on the Grid(they'll turn black). The first one is the Start point and second is the End.
+4. Select two points on the Grid. 
 
 ![alt text](https://github.com/rushmash91/path_visualizer/blob/master/img/IMG_20201111_105941_650__01.jpg "")
 
-5. Click Start
+5. The first one is the Start point and second is the End.
 
 ![alt text](https://github.com/rushmash91/path_visualizer/blob/master/img/IMG_20201111_105939_580__01__01.jpg "")
 
 
-6. Click Start
+6. Click Start to select walls.
 
 ![alt text](https://github.com/rushmash91/path_visualizer/blob/master/img/IMG_20201111_105937_007__01.jpg "")
 
-7. Click Start
+7. Select the blocks the path can not use. They'll act like barriers.
 
 ![alt text](https://github.com/rushmash91/path_visualizer/blob/master/img/IMG_20201111_105934_202__01.jpg "")
 
-8. Click Start
+8. Press enter to find shortest path.
 
 ![alt text](https://github.com/rushmash91/path_visualizer/blob/master/img/IMG_20201111_105931_105__01.jpg "")
 
-9. Press enter to find shortest path.
+9. Exit the window and run again to try again.
 
 ![alt text](https://github.com/rushmash91/path_visualizer/blob/master/img/IMG_20201111_105928_588__01.jpg "")
 
