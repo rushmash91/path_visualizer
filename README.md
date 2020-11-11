@@ -3,7 +3,7 @@
 ## Description
 Using Breadth First Search to find shortest Path on a Pygame Grid.
 
-[The matrix module used here has been published now and can now be directly used.(https://github.com/rushmash91/matrix_path)
+[The matrix module used here has been published now and can now be directly used.](https://github.com/rushmash91/matrix_path)
 
 
 ## Prerequisite
