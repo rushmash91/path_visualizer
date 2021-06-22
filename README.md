@@ -1,4 +1,11 @@
+<div align="center">
+
 # Path Visualizer
+
+<img src="https://github.com/rushmash91/path_visualizer/blob/master/img/pathfinder.gif" width="400" height="400" />
+
+</div>
+
 
 ## Description
 Using Breadth First Search to find shortest Path on a Pygame Grid.
