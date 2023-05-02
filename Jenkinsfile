@@ -7,9 +7,9 @@ pipeline {
       }
     }
 
-    stage('') {
+    stage('error') {
       steps {
-        sh 'docker build -t python .'
+        sh 'docker -v'
       }
     }
 
